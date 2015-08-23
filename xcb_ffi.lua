@@ -50,7 +50,7 @@ typedef struct {
 ]]
 
 -- Include the generated xproto header.
---#include "xproto.h"
+require ("xproto")
 
 
 ffi.cdef[[
