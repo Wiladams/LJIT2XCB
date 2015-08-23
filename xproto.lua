@@ -5637,72 +5637,17 @@ xcb_depth_end (xcb_depth_iterator_t i  /**< */);
 int
 xcb_screen_sizeof (const void  *_buffer  /**< */);
 
-
-/*****************************************************************************
- **
- ** int xcb_screen_allowed_depths_length
- ** 
- ** @param const xcb_screen_t *R
- ** @returns int
- **
- *****************************************************************************/
- 
 int
 xcb_screen_allowed_depths_length (const xcb_screen_t *R  /**< */);
 
-
-/*****************************************************************************
- **
- ** xcb_depth_iterator_t xcb_screen_allowed_depths_iterator
- ** 
- ** @param const xcb_screen_t *R
- ** @returns xcb_depth_iterator_t
- **
- *****************************************************************************/
- 
 xcb_depth_iterator_t
 xcb_screen_allowed_depths_iterator (const xcb_screen_t *R  /**< */);
 
-/**
- * Get the next element of the iterator
- * @param i Pointer to a xcb_screen_iterator_t
- *
- * Get the next element in the iterator. The member rem is
- * decreased by one. The member data points to the next
- * element. The member index is increased by sizeof(xcb_screen_t)
- */
 
-/*****************************************************************************
- **
- ** void xcb_screen_next
- ** 
- ** @param xcb_screen_iterator_t *i
- ** @returns void
- **
- *****************************************************************************/
  
 void
 xcb_screen_next (xcb_screen_iterator_t *i  /**< */);
 
-/**
- * Return the iterator pointing to the last element
- * @param i An xcb_screen_iterator_t
- * @return  The iterator pointing to the last element
- *
- * Set the current element in the iterator to the last element.
- * The member rem is set to 0. The member data points to the
- * last element.
- */
-
-/*****************************************************************************
- **
- ** xcb_generic_iterator_t xcb_screen_end
- ** 
- ** @param xcb_screen_iterator_t i
- ** @returns xcb_generic_iterator_t
- **
- *****************************************************************************/
- 
 xcb_generic_iterator_t
 xcb_screen_end (xcb_screen_iterator_t i  /**< */);
 
@@ -5710,28 +5655,10 @@ int
 xcb_setup_request_sizeof (const void  *_buffer  /**< */);
 
 
-/*****************************************************************************
- **
- ** char * xcb_setup_request_authorization_protocol_name
- ** 
- ** @param const xcb_setup_request_t *R
- ** @returns char *
- **
- *****************************************************************************/
- 
 char *
 xcb_setup_request_authorization_protocol_name (const xcb_setup_request_t *R  /**< */);
 
 
-/*****************************************************************************
- **
- ** int xcb_setup_request_authorization_protocol_name_length
- ** 
- ** @param const xcb_setup_request_t *R
- ** @returns int
- **
- *****************************************************************************/
- 
 int
 xcb_setup_request_authorization_protocol_name_length (const xcb_setup_request_t *R  /**< */);
 
@@ -6279,70 +6206,6 @@ xcb_create_window_checked (xcb_connection_t *c  /**< */,
                            uint32_t          value_mask  /**< */,
                            const uint32_t   *value_list  /**< */);
 
-/**
- * @brief Creates a window
- *
- * @param c The connection
- * @param depth Specifies the new window's depth (TODO: what unit?).
- * \n
- * The special value `XCB_COPY_FROM_PARENT` means the depth is taken from the
- * \a parent window.
- * @param wid The ID with which you will refer to the new window, created by
- * `xcb_generate_id`.
- * @param parent The parent window of the new window.
- * @param x The X coordinate of the new window.
- * @param y The Y coordinate of the new window.
- * @param width The width of the new window.
- * @param height The height of the new window.
- * @param border_width TODO:
- * \n
- * Must be zero if the `class` is `InputOnly` or a `xcb_match_error_t` occurs.
- * @param _class A bitmask of #xcb_window_class_t values.
- * @param _class \n
- * @param visual Specifies the id for the new window's visual.
- * \n
- * The special value `XCB_COPY_FROM_PARENT` means the visual is taken from the
- * \a parent window.
- * @param value_mask A bitmask of #xcb_cw_t values.
- * @return A cookie
- *
- * Creates an unmapped window as child of the specified \a parent window. A
- * CreateNotify event will be generated. The new window is placed on top in the
- * stacking order with respect to siblings.
- * 
- * The coordinate system has the X axis horizontal and the Y axis vertical with
- * the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms
- * of pixels, and coincide with pixel centers. Each window and pixmap has its own
- * coordinate system. For a window, the origin is inside the border at the inside,
- * upper-left corner.
- * 
- * The created window is not yet displayed (mapped), call `xcb_map_window` to
- * display it.
- * 
- * The created window will initially use the same cursor as its parent.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_create_window
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           depth
- ** @param xcb_window_t      wid
- ** @param xcb_window_t      parent
- ** @param int16_t           x
- ** @param int16_t           y
- ** @param uint16_t          width
- ** @param uint16_t          height
- ** @param uint16_t          border_width
- ** @param uint16_t          _class
- ** @param xcb_visualid_t    visual
- ** @param uint32_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_create_window (xcb_connection_t *c  /**< */,
@@ -6361,71 +6224,11 @@ xcb_create_window (xcb_connection_t *c  /**< */,
 
 int
 xcb_change_window_attributes_sizeof (const void  *_buffer  /**< */);
-
-/**
- * @brief change window attributes
- *
- * @param c The connection
- * @param window The window to change.
- * @param value_mask A bitmask of #xcb_cw_t values.
- * @param value_mask \n
- * @param value_list Values for each of the attributes specified in the bitmask \a value_mask. The
- * order has to correspond to the order of possible \a value_mask bits. See the
- * example.
- * @return A cookie
- *
- * Changes the attributes specified by \a value_mask for the specified \a window.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_change_window_attributes_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint32_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
- 
 xcb_void_cookie_t
 xcb_change_window_attributes_checked (xcb_connection_t *c  /**< */,
                                       xcb_window_t      window  /**< */,
                                       uint32_t          value_mask  /**< */,
                                       const uint32_t   *value_list  /**< */);
-
-/**
- * @brief change window attributes
- *
- * @param c The connection
- * @param window The window to change.
- * @param value_mask A bitmask of #xcb_cw_t values.
- * @param value_mask \n
- * @param value_list Values for each of the attributes specified in the bitmask \a value_mask. The
- * order has to correspond to the order of possible \a value_mask bits. See the
- * example.
- * @return A cookie
- *
- * Changes the attributes specified by \a value_mask for the specified \a window.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_change_window_attributes
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint32_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_change_window_attributes (xcb_connection_t *c  /**< */,
@@ -6433,303 +6236,53 @@ xcb_change_window_attributes (xcb_connection_t *c  /**< */,
                               uint32_t          value_mask  /**< */,
                               const uint32_t   *value_list  /**< */);
 
-/**
- * @brief Gets window attributes
- *
- * @param c The connection
- * @param window The window to get the attributes from.
- * @return A cookie
- *
- * Gets the current attributes for the specified \a window.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_get_window_attributes_cookie_t xcb_get_window_attributes
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_get_window_attributes_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_window_attributes_cookie_t
 xcb_get_window_attributes (xcb_connection_t *c  /**< */,
                            xcb_window_t      window  /**< */);
 
-/**
- * @brief Gets window attributes
- *
- * @param c The connection
- * @param window The window to get the attributes from.
- * @return A cookie
- *
- * Gets the current attributes for the specified \a window.
- * 
- * This form can be used only if the request will cause
- * a reply to be generated. Any returned error will be
- * placed in the event queue.
- */
-
-/*****************************************************************************
- **
- ** xcb_get_window_attributes_cookie_t xcb_get_window_attributes_unchecked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_get_window_attributes_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_window_attributes_cookie_t
 xcb_get_window_attributes_unchecked (xcb_connection_t *c  /**< */,
                                      xcb_window_t      window  /**< */);
 
-/**
- * Return the reply
- * @param c      The connection
- * @param cookie The cookie
- * @param e      The xcb_generic_error_t supplied
- *
- * Returns the reply of the request asked by
- * 
- * The parameter @p e supplied to this function must be NULL if
- * xcb_get_window_attributes_unchecked(). is used.
- * Otherwise, it stores the error if any.
- *
- * The returned value must be freed by the caller using free().
- */
-
-/*****************************************************************************
- **
- ** xcb_get_window_attributes_reply_t * xcb_get_window_attributes_reply
- ** 
- ** @param xcb_connection_t                    *c
- ** @param xcb_get_window_attributes_cookie_t   cookie
- ** @param xcb_generic_error_t                **e
- ** @returns xcb_get_window_attributes_reply_t *
- **
- *****************************************************************************/
  
 xcb_get_window_attributes_reply_t *
 xcb_get_window_attributes_reply (xcb_connection_t                    *c  /**< */,
                                  xcb_get_window_attributes_cookie_t   cookie  /**< */,
                                  xcb_generic_error_t                **e  /**< */);
 
-/**
- * @brief Destroys a window
- *
- * @param c The connection
- * @param window The window to destroy.
- * @return A cookie
- *
- * Destroys the specified window and all of its subwindows. A DestroyNotify event
- * is generated for each destroyed window (a DestroyNotify event is first generated
- * for any given window's inferiors). If the window was mapped, it will be
- * automatically unmapped before destroying.
- * 
- * Calling DestroyWindow on the root window will do nothing.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_destroy_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_destroy_window_checked (xcb_connection_t *c  /**< */,
                             xcb_window_t      window  /**< */);
 
-/**
- * @brief Destroys a window
- *
- * @param c The connection
- * @param window The window to destroy.
- * @return A cookie
- *
- * Destroys the specified window and all of its subwindows. A DestroyNotify event
- * is generated for each destroyed window (a DestroyNotify event is first generated
- * for any given window's inferiors). If the window was mapped, it will be
- * automatically unmapped before destroying.
- * 
- * Calling DestroyWindow on the root window will do nothing.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_destroy_window
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_destroy_window (xcb_connection_t *c  /**< */,
                     xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_destroy_subwindows_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_destroy_subwindows_checked (xcb_connection_t *c  /**< */,
                                 xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_destroy_subwindows
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_destroy_subwindows (xcb_connection_t *c  /**< */,
                         xcb_window_t      window  /**< */);
 
-/**
- * @brief Changes a client's save set
- *
- * @param c The connection
- * @param mode A bitmask of #xcb_set_mode_t values.
- * @param mode Insert to add the specified window to the save set or Delete to delete it from the save set.
- * @param window The window to add or delete to/from your save set.
- * @return A cookie
- *
- * TODO: explain what the save set is for.
- * 
- * This function either adds or removes the specified window to the client's (your
- * application's) save set.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_change_save_set_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           mode
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
- 
 xcb_void_cookie_t
 xcb_change_save_set_checked (xcb_connection_t *c  /**< */,
                              uint8_t           mode  /**< */,
                              xcb_window_t      window  /**< */);
 
-/**
- * @brief Changes a client's save set
- *
- * @param c The connection
- * @param mode A bitmask of #xcb_set_mode_t values.
- * @param mode Insert to add the specified window to the save set or Delete to delete it from the save set.
- * @param window The window to add or delete to/from your save set.
- * @return A cookie
- *
- * TODO: explain what the save set is for.
- * 
- * This function either adds or removes the specified window to the client's (your
- * application's) save set.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_change_save_set
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           mode
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_change_save_set (xcb_connection_t *c  /**< */,
                      uint8_t           mode  /**< */,
                      xcb_window_t      window  /**< */);
 
-/**
- * @brief Reparents a window
- *
- * @param c The connection
- * @param window The window to reparent.
- * @param parent The new parent of the window.
- * @param x The X position of the window within its new parent.
- * @param y The Y position of the window within its new parent.
- * @return A cookie
- *
- * Makes the specified window a child of the specified parent window. If the
- * window is mapped, it will automatically be unmapped before reparenting and
- * re-mapped after reparenting. The window is placed in the stacking order on top
- * with respect to sibling windows.
- * 
- * After reparenting, a ReparentNotify event is generated.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_reparent_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param xcb_window_t      parent
- ** @param int16_t           x
- ** @param int16_t           y
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_reparent_window_checked (xcb_connection_t *c  /**< */,
@@ -6738,37 +6291,6 @@ xcb_reparent_window_checked (xcb_connection_t *c  /**< */,
                              int16_t           x  /**< */,
                              int16_t           y  /**< */);
 
-/**
- * @brief Reparents a window
- *
- * @param c The connection
- * @param window The window to reparent.
- * @param parent The new parent of the window.
- * @param x The X position of the window within its new parent.
- * @param y The Y position of the window within its new parent.
- * @return A cookie
- *
- * Makes the specified window a child of the specified parent window. If the
- * window is mapped, it will automatically be unmapped before reparenting and
- * re-mapped after reparenting. The window is placed in the stacking order on top
- * with respect to sibling windows.
- * 
- * After reparenting, a ReparentNotify event is generated.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_reparent_window
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param xcb_window_t      parent
- ** @param int16_t           x
- ** @param int16_t           y
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_reparent_window (xcb_connection_t *c  /**< */,
@@ -6777,249 +6299,42 @@ xcb_reparent_window (xcb_connection_t *c  /**< */,
                      int16_t           x  /**< */,
                      int16_t           y  /**< */);
 
-/**
- * @brief Makes a window visible
- *
- * @param c The connection
- * @param window The window to make visible.
- * @return A cookie
- *
- * Maps the specified window. This means making the window visible (as long as its
- * parent is visible).
- * 
- * This MapWindow request will be translated to a MapRequest request if a window
- * manager is running. The window manager then decides to either map the window or
- * not. Set the override-redirect window attribute to true if you want to bypass
- * this mechanism.
- * 
- * If the window manager decides to map the window (or if no window manager is
- * running), a MapNotify event is generated.
- * 
- * If the window becomes viewable and no earlier contents for it are remembered,
- * the X server tiles the window with its background. If the window's background
- * is undefined, the existing screen contents are not altered, and the X server
- * generates zero or more Expose events.
- * 
- * If the window type is InputOutput, an Expose event will be generated when the
- * window becomes visible. The normal response to an Expose event should be to
- * repaint the window.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_map_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_map_window_checked (xcb_connection_t *c  /**< */,
                         xcb_window_t      window  /**< */);
 
-/**
- * @brief Makes a window visible
- *
- * @param c The connection
- * @param window The window to make visible.
- * @return A cookie
- *
- * Maps the specified window. This means making the window visible (as long as its
- * parent is visible).
- * 
- * This MapWindow request will be translated to a MapRequest request if a window
- * manager is running. The window manager then decides to either map the window or
- * not. Set the override-redirect window attribute to true if you want to bypass
- * this mechanism.
- * 
- * If the window manager decides to map the window (or if no window manager is
- * running), a MapNotify event is generated.
- * 
- * If the window becomes viewable and no earlier contents for it are remembered,
- * the X server tiles the window with its background. If the window's background
- * is undefined, the existing screen contents are not altered, and the X server
- * generates zero or more Expose events.
- * 
- * If the window type is InputOutput, an Expose event will be generated when the
- * window becomes visible. The normal response to an Expose event should be to
- * repaint the window.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_map_window
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_map_window (xcb_connection_t *c  /**< */,
                 xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_map_subwindows_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_map_subwindows_checked (xcb_connection_t *c  /**< */,
                             xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_map_subwindows
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_map_subwindows (xcb_connection_t *c  /**< */,
                     xcb_window_t      window  /**< */);
 
-/**
- * @brief Makes a window invisible
- *
- * @param c The connection
- * @param window The window to make invisible.
- * @return A cookie
- *
- * Unmaps the specified window. This means making the window invisible (and all
- * its child windows).
- * 
- * Unmapping a window leads to the `UnmapNotify` event being generated. Also,
- * `Expose` events are generated for formerly obscured windows.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
 
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_unmap_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_unmap_window_checked (xcb_connection_t *c  /**< */,
                           xcb_window_t      window  /**< */);
 
-/**
- * @brief Makes a window invisible
- *
- * @param c The connection
- * @param window The window to make invisible.
- * @return A cookie
- *
- * Unmaps the specified window. This means making the window invisible (and all
- * its child windows).
- * 
- * Unmapping a window leads to the `UnmapNotify` event being generated. Also,
- * `Expose` events are generated for formerly obscured windows.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_unmap_window
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_unmap_window (xcb_connection_t *c  /**< */,
                   xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_unmap_subwindows_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_unmap_subwindows_checked (xcb_connection_t *c  /**< */,
                               xcb_window_t      window  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_unmap_subwindows
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_unmap_subwindows (xcb_connection_t *c  /**< */,
@@ -7028,34 +6343,6 @@ xcb_unmap_subwindows (xcb_connection_t *c  /**< */,
 int
 xcb_configure_window_sizeof (const void  *_buffer  /**< */);
 
-/**
- * @brief Configures window attributes
- *
- * @param c The connection
- * @param window The window to configure.
- * @param value_mask Bitmask of attributes to change.
- * @param value_list New values, corresponding to the attributes in value_mask. The order has to
- * correspond to the order of possible \a value_mask bits. See the example.
- * @return A cookie
- *
- * Configures a window's size, position, border width and stacking order.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_configure_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint16_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_configure_window_checked (xcb_connection_t *c  /**< */,
@@ -7063,31 +6350,6 @@ xcb_configure_window_checked (xcb_connection_t *c  /**< */,
                               uint16_t          value_mask  /**< */,
                               const uint32_t   *value_list  /**< */);
 
-/**
- * @brief Configures window attributes
- *
- * @param c The connection
- * @param window The window to configure.
- * @param value_mask Bitmask of attributes to change.
- * @param value_list New values, corresponding to the attributes in value_mask. The order has to
- * correspond to the order of possible \a value_mask bits. See the example.
- * @return A cookie
- *
- * Configures a window's size, position, border width and stacking order.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_configure_window
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint16_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_configure_window (xcb_connection_t *c  /**< */,
@@ -7095,36 +6357,6 @@ xcb_configure_window (xcb_connection_t *c  /**< */,
                       uint16_t          value_mask  /**< */,
                       const uint32_t   *value_list  /**< */);
 
-/**
- * @brief Change window stacking order
- *
- * @param c The connection
- * @param direction A bitmask of #xcb_circulate_t values.
- * @param direction \n
- * @param window The window to raise/lower (depending on \a direction).
- * @return A cookie
- *
- * If \a direction is `XCB_CIRCULATE_RAISE_LOWEST`, the lowest mapped child (if
- * any) will be raised to the top of the stack.
- * 
- * If \a direction is `XCB_CIRCULATE_LOWER_HIGHEST`, the highest mapped child will
- * be lowered to the bottom of the stack.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_circulate_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           direction
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_circulate_window_checked (xcb_connection_t *c  /**< */,
@@ -16616,6 +15848,8 @@ setmetatable(exports, {
         for k,v in pairs(self.Constants) do 
             _G[k] = v;
         end
+
+        return self;
     end,
 })
 return exports 

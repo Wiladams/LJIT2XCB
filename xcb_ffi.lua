@@ -50,7 +50,7 @@ typedef struct {
 ]]
 
 -- Include the generated xproto header.
-require ("xproto")
+local xcb_proto = require ("xproto")
 
 
 ffi.cdef[[
@@ -146,6 +146,22 @@ local exports = {
 	XCB_COPY_FROM_PARENT = 0;
 	XCB_CURRENT_TIME = 0;
 	XCB_NO_SYMBOL = 0;
+
+    -- Library Functions
+    
 }
+
+setmetatable(exports, {
+    __call = function(self, ...)
+        xcb_proto();
+
+        for k,v in pairs(self) do 
+            _G[k] = v;
+        end
+
+        return self;
+    end,
+
+})
 
 return exports
