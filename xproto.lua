@@ -6021,175 +6021,28 @@ xcb_setup_pixmap_formats_iterator (const xcb_setup_t *R  /**< */);
 int
 xcb_setup_roots_length (const xcb_setup_t *R  /**< */);
 
-
-/*****************************************************************************
- **
- ** xcb_screen_iterator_t xcb_setup_roots_iterator
- ** 
- ** @param const xcb_setup_t *R
- ** @returns xcb_screen_iterator_t
- **
- *****************************************************************************/
  
 xcb_screen_iterator_t
 xcb_setup_roots_iterator (const xcb_setup_t *R  /**< */);
 
-/**
- * Get the next element of the iterator
- * @param i Pointer to a xcb_setup_iterator_t
- *
- * Get the next element in the iterator. The member rem is
- * decreased by one. The member data points to the next
- * element. The member index is increased by sizeof(xcb_setup_t)
- */
 
-/*****************************************************************************
- **
- ** void xcb_setup_next
- ** 
- ** @param xcb_setup_iterator_t *i
- ** @returns void
- **
- *****************************************************************************/
- 
 void
 xcb_setup_next (xcb_setup_iterator_t *i  /**< */);
 
-/**
- * Return the iterator pointing to the last element
- * @param i An xcb_setup_iterator_t
- * @return  The iterator pointing to the last element
- *
- * Set the current element in the iterator to the last element.
- * The member rem is set to 0. The member data points to the
- * last element.
- */
-
-/*****************************************************************************
- **
- ** xcb_generic_iterator_t xcb_setup_end
- ** 
- ** @param xcb_setup_iterator_t i
- ** @returns xcb_generic_iterator_t
- **
- *****************************************************************************/
- 
 xcb_generic_iterator_t
 xcb_setup_end (xcb_setup_iterator_t i  /**< */);
 
-/**
- * Get the next element of the iterator
- * @param i Pointer to a xcb_client_message_data_iterator_t
- *
- * Get the next element in the iterator. The member rem is
- * decreased by one. The member data points to the next
- * element. The member index is increased by sizeof(xcb_client_message_data_t)
- */
 
-/*****************************************************************************
- **
- ** void xcb_client_message_data_next
- ** 
- ** @param xcb_client_message_data_iterator_t *i
- ** @returns void
- **
- *****************************************************************************/
- 
 void
 xcb_client_message_data_next (xcb_client_message_data_iterator_t *i  /**< */);
 
-/**
- * Return the iterator pointing to the last element
- * @param i An xcb_client_message_data_iterator_t
- * @return  The iterator pointing to the last element
- *
- * Set the current element in the iterator to the last element.
- * The member rem is set to 0. The member data points to the
- * last element.
- */
 
-/*****************************************************************************
- **
- ** xcb_generic_iterator_t xcb_client_message_data_end
- ** 
- ** @param xcb_client_message_data_iterator_t i
- ** @returns xcb_generic_iterator_t
- **
- *****************************************************************************/
- 
 xcb_generic_iterator_t
 xcb_client_message_data_end (xcb_client_message_data_iterator_t i  /**< */);
 
 int
 xcb_create_window_sizeof (const void  *_buffer  /**< */);
 
-/**
- * @brief Creates a window
- *
- * @param c The connection
- * @param depth Specifies the new window's depth (TODO: what unit?).
- * \n
- * The special value `XCB_COPY_FROM_PARENT` means the depth is taken from the
- * \a parent window.
- * @param wid The ID with which you will refer to the new window, created by
- * `xcb_generate_id`.
- * @param parent The parent window of the new window.
- * @param x The X coordinate of the new window.
- * @param y The Y coordinate of the new window.
- * @param width The width of the new window.
- * @param height The height of the new window.
- * @param border_width TODO:
- * \n
- * Must be zero if the `class` is `InputOnly` or a `xcb_match_error_t` occurs.
- * @param _class A bitmask of #xcb_window_class_t values.
- * @param _class \n
- * @param visual Specifies the id for the new window's visual.
- * \n
- * The special value `XCB_COPY_FROM_PARENT` means the visual is taken from the
- * \a parent window.
- * @param value_mask A bitmask of #xcb_cw_t values.
- * @return A cookie
- *
- * Creates an unmapped window as child of the specified \a parent window. A
- * CreateNotify event will be generated. The new window is placed on top in the
- * stacking order with respect to siblings.
- * 
- * The coordinate system has the X axis horizontal and the Y axis vertical with
- * the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms
- * of pixels, and coincide with pixel centers. Each window and pixmap has its own
- * coordinate system. For a window, the origin is inside the border at the inside,
- * upper-left corner.
- * 
- * The created window is not yet displayed (mapped), call `xcb_map_window` to
- * display it.
- * 
- * The created window will initially use the same cursor as its parent.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_create_window_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           depth
- ** @param xcb_window_t      wid
- ** @param xcb_window_t      parent
- ** @param int16_t           x
- ** @param int16_t           y
- ** @param uint16_t          width
- ** @param uint16_t          height
- ** @param uint16_t          border_width
- ** @param uint16_t          _class
- ** @param xcb_visualid_t    visual
- ** @param uint32_t          value_mask
- ** @param const uint32_t   *value_list
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_create_window_checked (xcb_connection_t *c  /**< */,
@@ -6363,117 +6216,22 @@ xcb_circulate_window_checked (xcb_connection_t *c  /**< */,
                               uint8_t           direction  /**< */,
                               xcb_window_t      window  /**< */);
 
-/**
- * @brief Change window stacking order
- *
- * @param c The connection
- * @param direction A bitmask of #xcb_circulate_t values.
- * @param direction \n
- * @param window The window to raise/lower (depending on \a direction).
- * @return A cookie
- *
- * If \a direction is `XCB_CIRCULATE_RAISE_LOWEST`, the lowest mapped child (if
- * any) will be raised to the top of the stack.
- * 
- * If \a direction is `XCB_CIRCULATE_LOWER_HIGHEST`, the highest mapped child will
- * be lowered to the bottom of the stack.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_circulate_window
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           direction
- ** @param xcb_window_t      window
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_circulate_window (xcb_connection_t *c  /**< */,
                       uint8_t           direction  /**< */,
                       xcb_window_t      window  /**< */);
 
-/**
- * @brief Get current window geometry
- *
- * @param c The connection
- * @param drawable The drawable (`Window` or `Pixmap`) of which the geometry will be received.
- * @return A cookie
- *
- * Gets the current geometry of the specified drawable (either `Window` or `Pixmap`).
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_get_geometry_cookie_t xcb_get_geometry
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_drawable_t    drawable
- ** @returns xcb_get_geometry_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_geometry_cookie_t
 xcb_get_geometry (xcb_connection_t *c  /**< */,
                   xcb_drawable_t    drawable  /**< */);
 
-/**
- * @brief Get current window geometry
- *
- * @param c The connection
- * @param drawable The drawable (`Window` or `Pixmap`) of which the geometry will be received.
- * @return A cookie
- *
- * Gets the current geometry of the specified drawable (either `Window` or `Pixmap`).
- * 
- * This form can be used only if the request will cause
- * a reply to be generated. Any returned error will be
- * placed in the event queue.
- */
-
-/*****************************************************************************
- **
- ** xcb_get_geometry_cookie_t xcb_get_geometry_unchecked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_drawable_t    drawable
- ** @returns xcb_get_geometry_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_geometry_cookie_t
 xcb_get_geometry_unchecked (xcb_connection_t *c  /**< */,
                             xcb_drawable_t    drawable  /**< */);
 
-/**
- * Return the reply
- * @param c      The connection
- * @param cookie The cookie
- * @param e      The xcb_generic_error_t supplied
- *
- * Returns the reply of the request asked by
- * 
- * The parameter @p e supplied to this function must be NULL if
- * xcb_get_geometry_unchecked(). is used.
- * Otherwise, it stores the error if any.
- *
- * The returned value must be freed by the caller using free().
- */
-
-/*****************************************************************************
- **
- ** xcb_get_geometry_reply_t * xcb_get_geometry_reply
- ** 
- ** @param xcb_connection_t           *c
- ** @param xcb_get_geometry_cookie_t   cookie
- ** @param xcb_generic_error_t       **e
- ** @returns xcb_get_geometry_reply_t *
- **
- *****************************************************************************/
  
 xcb_get_geometry_reply_t *
 xcb_get_geometry_reply (xcb_connection_t           *c  /**< */,
@@ -6483,27 +6241,6 @@ xcb_get_geometry_reply (xcb_connection_t           *c  /**< */,
 int
 xcb_query_tree_sizeof (const void  *_buffer  /**< */);
 
-/**
- * @brief query the window tree
- *
- * @param c The connection
- * @param window The \a window to query.
- * @return A cookie
- *
- * Gets the root window ID, parent window ID and list of children windows for the
- * specified \a window. The children are listed in bottom-to-top stacking order.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_query_tree_cookie_t xcb_query_tree
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @returns xcb_query_tree_cookie_t
- **
- *****************************************************************************/
  
 xcb_query_tree_cookie_t
 xcb_query_tree (xcb_connection_t *c  /**< */,
@@ -15369,30 +15106,6 @@ xcb_void_cookie_t
 xcb_kill_client_checked (xcb_connection_t *c  /**< */,
                          uint32_t          resource  /**< */);
 
-/**
- * @brief kills a client
- *
- * @param c The connection
- * @param resource Any resource belonging to the client (for example a Window), used to identify
- * the client connection.
- * \n
- * The special value of `XCB_KILL_ALL_TEMPORARY`, the resources of all clients
- * that have terminated in `RetainTemporary` (TODO) are destroyed.
- * @return A cookie
- *
- * Forces a close down of the client that created the specified \a resource.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_kill_client
- ** 
- ** @param xcb_connection_t *c
- ** @param uint32_t          resource
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_kill_client (xcb_connection_t *c  /**< */,
@@ -15401,30 +15114,6 @@ xcb_kill_client (xcb_connection_t *c  /**< */,
 int
 xcb_rotate_properties_sizeof (const void  *_buffer  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_rotate_properties_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint16_t          atoms_len
- ** @param int16_t           delta
- ** @param const xcb_atom_t *atoms
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_rotate_properties_checked (xcb_connection_t *c  /**< */,
@@ -15433,27 +15122,6 @@ xcb_rotate_properties_checked (xcb_connection_t *c  /**< */,
                                int16_t           delta  /**< */,
                                const xcb_atom_t *atoms  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_rotate_properties
- ** 
- ** @param xcb_connection_t *c
- ** @param xcb_window_t      window
- ** @param uint16_t          atoms_len
- ** @param int16_t           delta
- ** @param const xcb_atom_t *atoms
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_rotate_properties (xcb_connection_t *c  /**< */,
@@ -15462,50 +15130,11 @@ xcb_rotate_properties (xcb_connection_t *c  /**< */,
                        int16_t           delta  /**< */,
                        const xcb_atom_t *atoms  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will not cause
- * a reply to be generated. Any returned error will be
- * saved for handling by xcb_request_check().
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_force_screen_saver_checked
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           mode
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_force_screen_saver_checked (xcb_connection_t *c  /**< */,
                                 uint8_t           mode  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_void_cookie_t xcb_force_screen_saver
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           mode
- ** @returns xcb_void_cookie_t
- **
- *****************************************************************************/
  
 xcb_void_cookie_t
 xcb_force_screen_saver (xcb_connection_t *c  /**< */,
@@ -15514,85 +15143,18 @@ xcb_force_screen_saver (xcb_connection_t *c  /**< */,
 int
 xcb_set_pointer_mapping_sizeof (const void  *_buffer  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_set_pointer_mapping_cookie_t xcb_set_pointer_mapping
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           map_len
- ** @param const uint8_t    *map
- ** @returns xcb_set_pointer_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_set_pointer_mapping_cookie_t
 xcb_set_pointer_mapping (xcb_connection_t *c  /**< */,
                          uint8_t           map_len  /**< */,
                          const uint8_t    *map  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will cause
- * a reply to be generated. Any returned error will be
- * placed in the event queue.
- */
-
-/*****************************************************************************
- **
- ** xcb_set_pointer_mapping_cookie_t xcb_set_pointer_mapping_unchecked
- ** 
- ** @param xcb_connection_t *c
- ** @param uint8_t           map_len
- ** @param const uint8_t    *map
- ** @returns xcb_set_pointer_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_set_pointer_mapping_cookie_t
 xcb_set_pointer_mapping_unchecked (xcb_connection_t *c  /**< */,
                                    uint8_t           map_len  /**< */,
                                    const uint8_t    *map  /**< */);
 
-/**
- * Return the reply
- * @param c      The connection
- * @param cookie The cookie
- * @param e      The xcb_generic_error_t supplied
- *
- * Returns the reply of the request asked by
- * 
- * The parameter @p e supplied to this function must be NULL if
- * xcb_set_pointer_mapping_unchecked(). is used.
- * Otherwise, it stores the error if any.
- *
- * The returned value must be freed by the caller using free().
- */
-
-/*****************************************************************************
- **
- ** xcb_set_pointer_mapping_reply_t * xcb_set_pointer_mapping_reply
- ** 
- ** @param xcb_connection_t                  *c
- ** @param xcb_set_pointer_mapping_cookie_t   cookie
- ** @param xcb_generic_error_t              **e
- ** @returns xcb_set_pointer_mapping_reply_t *
- **
- *****************************************************************************/
- 
 xcb_set_pointer_mapping_reply_t *
 xcb_set_pointer_mapping_reply (xcb_connection_t                  *c  /**< */,
                                xcb_set_pointer_mapping_cookie_t   cookie  /**< */,
@@ -15601,115 +15163,29 @@ xcb_set_pointer_mapping_reply (xcb_connection_t                  *c  /**< */,
 int
 xcb_get_pointer_mapping_sizeof (const void  *_buffer  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_get_pointer_mapping_cookie_t xcb_get_pointer_mapping
- ** 
- ** @param xcb_connection_t *c
- ** @returns xcb_get_pointer_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_pointer_mapping_cookie_t
 xcb_get_pointer_mapping (xcb_connection_t *c  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will cause
- * a reply to be generated. Any returned error will be
- * placed in the event queue.
- */
-
-/*****************************************************************************
- **
- ** xcb_get_pointer_mapping_cookie_t xcb_get_pointer_mapping_unchecked
- ** 
- ** @param xcb_connection_t *c
- ** @returns xcb_get_pointer_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_get_pointer_mapping_cookie_t
 xcb_get_pointer_mapping_unchecked (xcb_connection_t *c  /**< */);
 
 
-/*****************************************************************************
- **
- ** uint8_t * xcb_get_pointer_mapping_map
- ** 
- ** @param const xcb_get_pointer_mapping_reply_t *R
- ** @returns uint8_t *
- **
- *****************************************************************************/
  
 uint8_t *
 xcb_get_pointer_mapping_map (const xcb_get_pointer_mapping_reply_t *R  /**< */);
 
 
-/*****************************************************************************
- **
- ** int xcb_get_pointer_mapping_map_length
- ** 
- ** @param const xcb_get_pointer_mapping_reply_t *R
- ** @returns int
- **
- *****************************************************************************/
  
 int
 xcb_get_pointer_mapping_map_length (const xcb_get_pointer_mapping_reply_t *R  /**< */);
 
 
-/*****************************************************************************
- **
- ** xcb_generic_iterator_t xcb_get_pointer_mapping_map_end
- ** 
- ** @param const xcb_get_pointer_mapping_reply_t *R
- ** @returns xcb_generic_iterator_t
- **
- *****************************************************************************/
  
 xcb_generic_iterator_t
 xcb_get_pointer_mapping_map_end (const xcb_get_pointer_mapping_reply_t *R  /**< */);
 
-/**
- * Return the reply
- * @param c      The connection
- * @param cookie The cookie
- * @param e      The xcb_generic_error_t supplied
- *
- * Returns the reply of the request asked by
- * 
- * The parameter @p e supplied to this function must be NULL if
- * xcb_get_pointer_mapping_unchecked(). is used.
- * Otherwise, it stores the error if any.
- *
- * The returned value must be freed by the caller using free().
- */
-
-/*****************************************************************************
- **
- ** xcb_get_pointer_mapping_reply_t * xcb_get_pointer_mapping_reply
- ** 
- ** @param xcb_connection_t                  *c
- ** @param xcb_get_pointer_mapping_cookie_t   cookie
- ** @param xcb_generic_error_t              **e
- ** @returns xcb_get_pointer_mapping_reply_t *
- **
- *****************************************************************************/
  
 xcb_get_pointer_mapping_reply_t *
 xcb_get_pointer_mapping_reply (xcb_connection_t                  *c  /**< */,
@@ -15719,84 +15195,18 @@ xcb_get_pointer_mapping_reply (xcb_connection_t                  *c  /**< */,
 int
 xcb_set_modifier_mapping_sizeof (const void  *_buffer  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- */
-
-/*****************************************************************************
- **
- ** xcb_set_modifier_mapping_cookie_t xcb_set_modifier_mapping
- ** 
- ** @param xcb_connection_t    *c
- ** @param uint8_t              keycodes_per_modifier
- ** @param const xcb_keycode_t *keycodes
- ** @returns xcb_set_modifier_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_set_modifier_mapping_cookie_t
 xcb_set_modifier_mapping (xcb_connection_t    *c  /**< */,
                           uint8_t              keycodes_per_modifier  /**< */,
                           const xcb_keycode_t *keycodes  /**< */);
 
-/**
- *
- * @param c The connection
- * @return A cookie
- *
- * Delivers a request to the X server.
- * 
- * This form can be used only if the request will cause
- * a reply to be generated. Any returned error will be
- * placed in the event queue.
- */
-
-/*****************************************************************************
- **
- ** xcb_set_modifier_mapping_cookie_t xcb_set_modifier_mapping_unchecked
- ** 
- ** @param xcb_connection_t    *c
- ** @param uint8_t              keycodes_per_modifier
- ** @param const xcb_keycode_t *keycodes
- ** @returns xcb_set_modifier_mapping_cookie_t
- **
- *****************************************************************************/
  
 xcb_set_modifier_mapping_cookie_t
 xcb_set_modifier_mapping_unchecked (xcb_connection_t    *c  /**< */,
                                     uint8_t              keycodes_per_modifier  /**< */,
                                     const xcb_keycode_t *keycodes  /**< */);
 
-/**
- * Return the reply
- * @param c      The connection
- * @param cookie The cookie
- * @param e      The xcb_generic_error_t supplied
- *
- * Returns the reply of the request asked by
- * 
- * The parameter @p e supplied to this function must be NULL if
- * xcb_set_modifier_mapping_unchecked(). is used.
- * Otherwise, it stores the error if any.
- *
- * The returned value must be freed by the caller using free().
- */
-
-/*****************************************************************************
- **
- ** xcb_set_modifier_mapping_reply_t * xcb_set_modifier_mapping_reply
- ** 
- ** @param xcb_connection_t                   *c
- ** @param xcb_set_modifier_mapping_cookie_t   cookie
- ** @param xcb_generic_error_t               **e
- ** @returns xcb_set_modifier_mapping_reply_t *
- **
- *****************************************************************************/
  
 xcb_set_modifier_mapping_reply_t *
 xcb_set_modifier_mapping_reply (xcb_connection_t                   *c  /**< */,

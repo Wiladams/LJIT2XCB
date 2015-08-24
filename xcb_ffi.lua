@@ -148,7 +148,11 @@ local exports = {
 	XCB_NO_SYMBOL = 0;
 
     -- Library Functions
-    
+    xcb_connect = Lib_XCB.xcb_connect;
+    xcb_get_setup = Lib_XCB.xcb_get_setup;
+    xcb_setup_roots_iterator = Lib_XCB.xcb_setup_roots_iterator;
+    xcb_screen_next = Lib_XCB.xcb_screen_next;
+
 }
 
 setmetatable(exports, {
