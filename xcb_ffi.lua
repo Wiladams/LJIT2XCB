@@ -152,7 +152,10 @@ local exports = {
     xcb_get_setup = Lib_XCB.xcb_get_setup;
     xcb_setup_roots_iterator = Lib_XCB.xcb_setup_roots_iterator;
     xcb_screen_next = Lib_XCB.xcb_screen_next;
-
+    xcb_generate_id = Lib_XCB.xcb_generate_id;
+    xcb_create_window = Lib_XCB.xcb_create_window;
+    xcb_map_window = Lib_XCB.xcb_map_window;
+    xcb_flush = Lib_XCB.xcb_flush;
 }
 
 setmetatable(exports, {

@@ -15248,9 +15248,18 @@ xcb_void_cookie_t
 xcb_no_operation (xcb_connection_t *c  /**< */);
 ]]
 
+local Enums = {
+    -- xcb_window_class_t
+    XCB_WINDOW_CLASS_COPY_FROM_PARENT = 0,
+    XCB_WINDOW_CLASS_INPUT_OUTPUT = 1,
+    XCB_WINDOW_CLASS_INPUT_ONLY = 2,
+    
+}
 
 local exports = {
-    Constants = require("xcb_proto_constants");    
+    Constants = require("xcb_proto_constants"); 
+    Enums = Enums;
+   
 }
 
 setmetatable(exports, {
@@ -15259,6 +15268,10 @@ setmetatable(exports, {
             _G[k] = v;
         end
 
+        for k,v in pairs(Enums) do
+            _G[k] = v;
+        end
+        
         return self;
     end,
 })
