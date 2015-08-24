@@ -1304,102 +1304,33 @@ typedef enum xcb_window_class_t {
 
 typedef enum xcb_cw_t {
     XCB_CW_BACK_PIXMAP = 1,
-/**< Overrides the default background-pixmap. The background pixmap and window must
-have the same root and same depth. Any size pixmap can be used, although some
-sizes may be faster than others.
-
-If `XCB_BACK_PIXMAP_NONE` is specified, the window has no defined background.
-The server may fill the contents with the previous screen contents or with
-contents of its own choosing.
-
-If `XCB_BACK_PIXMAP_PARENT_RELATIVE` is specified, the parent's background is
-used, but the window must have the same depth as the parent (or a Match error
-results).   The parent's background is tracked, and the current version is
-used each time the window background is required. */
 
     XCB_CW_BACK_PIXEL = 2,
-/**< Overrides `BackPixmap`. A pixmap of undefined size filled with the specified
-background pixel is used for the background. Range-checking is not performed,
-the background pixel is truncated to the appropriate number of bits. */
 
     XCB_CW_BORDER_PIXMAP = 4,
-/**< Overrides the default border-pixmap. The border pixmap and window must have the
-same root and the same depth. Any size pixmap can be used, although some sizes
-may be faster than others.
-
-The special value `XCB_COPY_FROM_PARENT` means the parent's border pixmap is
-copied (subsequent changes to the parent's border attribute do not affect the
-child), but the window must have the same depth as the parent. */
 
     XCB_CW_BORDER_PIXEL = 8,
-/**< Overrides `BorderPixmap`. A pixmap of undefined size filled with the specified
-border pixel is used for the border. Range checking is not performed on the
-border-pixel value, it is truncated to the appropriate number of bits. */
 
     XCB_CW_BIT_GRAVITY = 16,
-/**< Defines which region of the window should be retained if the window is resized. */
 
     XCB_CW_WIN_GRAVITY = 32,
-/**< Defines how the window should be repositioned if the parent is resized (see
-`ConfigureWindow`). */
 
     XCB_CW_BACKING_STORE = 64,
-/**< A backing-store of `WhenMapped` advises the server that maintaining contents of
-obscured regions when the window is mapped would be beneficial. A backing-store
-of `Always` advises the server that maintaining contents even when the window
-is unmapped would be beneficial. In this case, the server may generate an
-exposure event when the window is created. A value of `NotUseful` advises the
-server that maintaining contents is unnecessary, although a server may still
-choose to maintain contents while the window is mapped. Note that if the server
-maintains contents, then the server should maintain complete contents not just
-the region within the parent boundaries, even if the window is larger than its
-parent. While the server maintains contents, exposure events will not normally
-be generated, but the server may stop maintaining contents at any time. */
 
     XCB_CW_BACKING_PLANES = 128,
-/**< The backing-planes indicates (with bits set to 1) which bit planes of the
-window hold dynamic data that must be preserved in backing-stores and during
-save-unders. */
-
     XCB_CW_BACKING_PIXEL = 256,
-/**< The backing-pixel specifies what value to use in planes not covered by
-backing-planes. The server is free to save only the specified bit planes in the
-backing-store or save-under and regenerate the remaining planes with the
-specified pixel value. Any bits beyond the specified depth of the window in
-these values are simply ignored. */
 
     XCB_CW_OVERRIDE_REDIRECT = 512,
-/**< The override-redirect specifies whether map and configure requests on this
-window should override a SubstructureRedirect on the parent, typically to
-inform a window manager not to tamper with the window. */
 
     XCB_CW_SAVE_UNDER = 1024,
-/**< If 1, the server is advised that when this window is mapped, saving the
-contents of windows it obscures would be beneficial. */
 
     XCB_CW_EVENT_MASK = 2048,
-/**< The event-mask defines which events the client is interested in for this window
-(or for some event types, inferiors of the window). */
 
     XCB_CW_DONT_PROPAGATE = 4096,
-/**< The do-not-propagate-mask defines which events should not be propagated to
-ancestor windows when no client has the event type selected in this window. */
 
     XCB_CW_COLORMAP = 8192,
-/**< The colormap specifies the colormap that best reflects the true colors of the window. Servers
-capable of supporting multiple hardware colormaps may use this information, and window man-
-agers may use it for InstallColormap requests. The colormap must have the same visual type
-and root as the window (or a Match error results). If CopyFromParent is specified, the parent's
-colormap is copied (subsequent changes to the parent's colormap attribute do not affect the child).
-However, the window must have the same visual type as the parent (or a Match error results),
-and the parent must not have a colormap of None (or a Match error results). For an explanation
-of None, see FreeColormap request. The colormap is copied by sharing the colormap object
-between the child and the parent, not by making a complete copy of the colormap contents. */
 
     XCB_CW_CURSOR = 16384
-/**< If a cursor is specified, it will be used whenever the pointer is in the window. If None is speci-
-fied, the parent's cursor will be used when the pointer is in the window, and any change in the
-parent's cursor will cause an immediate change in the displayed cursor. */
 
 } xcb_cw_t;
 
@@ -2917,151 +2848,50 @@ typedef struct xcb_free_pixmap_request_t {
 
 typedef enum xcb_gc_t {
     XCB_GC_FUNCTION = 1,
-/**< TODO: Refer to GX */
 
     XCB_GC_PLANE_MASK = 2,
-/**< In graphics operations, given a source and destination pixel, the result is
-computed bitwise on corresponding bits of the pixels; that is, a Boolean
-operation is performed in each bit plane. The plane-mask restricts the
-operation to a subset of planes, so the result is:
-
-        ((src FUNC dst) AND plane-mask) OR (dst AND (NOT plane-mask)) */
 
     XCB_GC_FOREGROUND = 4,
-/**< Foreground colorpixel. */
 
     XCB_GC_BACKGROUND = 8,
-/**< Background colorpixel. */
 
     XCB_GC_LINE_WIDTH = 16,
-/**< The line-width is measured in pixels and can be greater than or equal to one, a wide line, or the
-special value zero, a thin line. */
 
     XCB_GC_LINE_STYLE = 32,
-/**< The line-style defines which sections of a line are drawn:
-Solid                The full path of the line is drawn.
-DoubleDash           The full path of the line is drawn, but the even dashes are filled differently
-                     than the odd dashes (see fill-style), with Butt cap-style used where even and
-                     odd dashes meet.
-OnOffDash            Only the even dashes are drawn, and cap-style applies to all internal ends of
-                     the individual dashes (except NotLast is treated as Butt). */
 
     XCB_GC_CAP_STYLE = 64,
-/**< The cap-style defines how the endpoints of a path are drawn:
-NotLast    The result is equivalent to Butt, except that for a line-width of zero the final
-           endpoint is not drawn.
-Butt       The result is square at the endpoint (perpendicular to the slope of the line)
-           with no projection beyond.
-Round      The result is a circular arc with its diameter equal to the line-width, centered
-           on the endpoint; it is equivalent to Butt for line-width zero.
-Projecting The result is square at the end, but the path continues beyond the endpoint for
-           a distance equal to half the line-width; it is equivalent to Butt for line-width
-           zero. */
 
     XCB_GC_JOIN_STYLE = 128,
-/**< The join-style defines how corners are drawn for wide lines:
-Miter               The outer edges of the two lines extend to meet at an angle. However, if the
-                    angle is less than 11 degrees, a Bevel join-style is used instead.
-Round               The result is a circular arc with a diameter equal to the line-width, centered
-                    on the joinpoint.
-Bevel               The result is Butt endpoint styles, and then the triangular notch is filled. */
 
     XCB_GC_FILL_STYLE = 256,
-/**< The fill-style defines the contents of the source for line, text, and fill requests. For all text and fill
-requests (for example, PolyText8, PolyText16, PolyFillRectangle, FillPoly, and PolyFillArc)
-as well as for line requests with line-style Solid, (for example, PolyLine, PolySegment,
-PolyRectangle, PolyArc) and for the even dashes for line requests with line-style OnOffDash
-or DoubleDash:
-Solid                     Foreground
-Tiled                     Tile
-OpaqueStippled            A tile with the same width and height as stipple but with background
-                          everywhere stipple has a zero and with foreground everywhere stipple
-                          has a one
-Stippled                  Foreground masked by stipple
-For the odd dashes for line requests with line-style DoubleDash:
-Solid                     Background
-Tiled                     Same as for even dashes
-OpaqueStippled            Same as for even dashes
-Stippled                  Background masked by stipple */
 
     XCB_GC_FILL_RULE = 512,
-/**<  */
 
     XCB_GC_TILE = 1024,
-/**< The tile/stipple represents an infinite two-dimensional plane with the tile/stipple replicated in all
-dimensions. When that plane is superimposed on the drawable for use in a graphics operation,
-the upper-left corner of some instance of the tile/stipple is at the coordinates within the drawable
-specified by the tile/stipple origin. The tile/stipple and clip origins are interpreted relative to the
-origin of whatever destination drawable is specified in a graphics request.
-The tile pixmap must have the same root and depth as the gcontext (or a Match error results).
-The stipple pixmap must have depth one and must have the same root as the gcontext (or a
-Match error results). For fill-style Stippled (but not fill-style
-OpaqueStippled), the stipple pattern is tiled in a single plane and acts as an
-additional clip mask to be ANDed with the clip-mask.
-Any size pixmap can be used for tiling or stippling, although some sizes may be faster to use than
-others. */
 
     XCB_GC_STIPPLE = 2048,
-/**< The tile/stipple represents an infinite two-dimensional plane with the tile/stipple replicated in all
-dimensions. When that plane is superimposed on the drawable for use in a graphics operation,
-the upper-left corner of some instance of the tile/stipple is at the coordinates within the drawable
-specified by the tile/stipple origin. The tile/stipple and clip origins are interpreted relative to the
-origin of whatever destination drawable is specified in a graphics request.
-The tile pixmap must have the same root and depth as the gcontext (or a Match error results).
-The stipple pixmap must have depth one and must have the same root as the gcontext (or a
-Match error results). For fill-style Stippled (but not fill-style
-OpaqueStippled), the stipple pattern is tiled in a single plane and acts as an
-additional clip mask to be ANDed with the clip-mask.
-Any size pixmap can be used for tiling or stippling, although some sizes may be faster to use than
-others. */
 
     XCB_GC_TILE_STIPPLE_ORIGIN_X = 4096,
-/**< TODO */
 
     XCB_GC_TILE_STIPPLE_ORIGIN_Y = 8192,
-/**< TODO */
 
     XCB_GC_FONT = 16384,
-/**< Which font to use for the `ImageText8` and `ImageText16` requests. */
 
     XCB_GC_SUBWINDOW_MODE = 32768,
-/**< For ClipByChildren, both source and destination windows are additionally
-clipped by all viewable InputOutput children. For IncludeInferiors, neither
-source nor destination window is
-clipped by inferiors. This will result in including subwindow contents in the source and drawing
-through subwindow boundaries of the destination. The use of IncludeInferiors with a source or
-destination window of one depth with mapped inferiors of differing depth is not illegal, but the
-semantics is undefined by the core protocol. */
 
     XCB_GC_GRAPHICS_EXPOSURES = 65536,
-/**< Whether ExposureEvents should be generated (1) or not (0).
-
-The default is 1. */
 
     XCB_GC_CLIP_ORIGIN_X = 131072,
-/**< TODO */
 
     XCB_GC_CLIP_ORIGIN_Y = 262144,
-/**< TODO */
 
     XCB_GC_CLIP_MASK = 524288,
-/**< The clip-mask restricts writes to the destination drawable. Only pixels where the clip-mask has
-bits set to 1 are drawn. Pixels are not drawn outside the area covered by the clip-mask or where
-the clip-mask has bits set to 0. The clip-mask affects all graphics requests, but it does not clip
-sources. The clip-mask origin is interpreted relative to the origin of whatever destination drawable is specified in a graphics request. If a pixmap is specified as the clip-mask, it must have
-depth 1 and have the same root as the gcontext (or a Match error results). If clip-mask is None,
-then pixels are always drawn, regardless of the clip origin. The clip-mask can also be set with the
-SetClipRectangles request. */
 
     XCB_GC_DASH_OFFSET = 1048576,
-/**< TODO */
 
     XCB_GC_DASH_LIST = 2097152,
-/**< TODO */
 
     XCB_GC_ARC_MODE = 4194304
-/**< TODO */
-
 } xcb_gc_t;
 
 typedef enum xcb_gx_t {
@@ -3280,11 +3110,7 @@ typedef struct xcb_copy_plane_request_t {
 
 typedef enum xcb_coord_mode_t {
     XCB_COORD_MODE_ORIGIN = 0,
-/**< Treats all coordinates as relative to the origin. */
-
     XCB_COORD_MODE_PREVIOUS = 1
-/**< Treats all coordinates after the first as relative to the previous coordinate. */
-
 } xcb_coord_mode_t;
 
 /** Opcode for xcb_poly_point. */
@@ -15248,17 +15074,11 @@ xcb_void_cookie_t
 xcb_no_operation (xcb_connection_t *c  /**< */);
 ]]
 
-local Enums = {
-    -- xcb_window_class_t
-    XCB_WINDOW_CLASS_COPY_FROM_PARENT = 0,
-    XCB_WINDOW_CLASS_INPUT_OUTPUT = 1,
-    XCB_WINDOW_CLASS_INPUT_ONLY = 2,
-    
-}
+
 
 local exports = {
     Constants = require("xcb_proto_constants"); 
-    Enums = Enums;
+    Enums = require("xcb_proto_enums");
    
 }
 
@@ -15268,8 +15088,11 @@ setmetatable(exports, {
             _G[k] = v;
         end
 
-        for k,v in pairs(Enums) do
-            _G[k] = v;
+        -- Enums
+        for k,v in pairs(self.Enums) do
+            for name, value in pairs(v) do
+                _G[name] = value;
+            end
         end
         
         return self;

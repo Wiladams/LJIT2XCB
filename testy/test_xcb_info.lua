@@ -1,4 +1,8 @@
 -- test_xcb_info.lua
+--[[
+    Display some information about the default screen 
+    on the default DISPLAY
+--]]
 
 package.path = package.path..";../?.lua"
 

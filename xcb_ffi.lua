@@ -156,6 +156,14 @@ local exports = {
     xcb_create_window = Lib_XCB.xcb_create_window;
     xcb_map_window = Lib_XCB.xcb_map_window;
     xcb_flush = Lib_XCB.xcb_flush;
+    xcb_create_gc = Lib_XCB.xcb_create_gc;
+    xcb_wait_for_event = Lib_XCB.xcb_wait_for_event;
+    xcb_poly_point = Lib_XCB.xcb_poly_point;
+    xcb_poly_line = Lib_XCB.xcb_poly_line;
+    xcb_poly_segment = Lib_XCB.xcb_poly_segment;
+    xcb_poly_rectangle = Lib_XCB.xcb_poly_rectangle;
+    xcb_poly_arc = Lib_XCB.xcb_poly_arc;
+
 }
 
 setmetatable(exports, {
