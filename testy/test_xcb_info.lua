@@ -8,24 +8,25 @@ package.path = package.path..";../?.lua"
 
 local ffi = require("ffi")
 
-local xcb = require("xcb")()
-local utils = require("test_utils")();
+local xcb = require("xcb")
+local utils = require("test_utils");
+local printf = utils.printf
 
-local Lib_XCB = Lib_XCB;
+--local Lib_XCB = Lib_XCB;
 
 
 local function main ()
     -- Open the connection to the X server. Use the DISPLAY environment variable */
     local screenNum = ffi.new("int[1]");
-    local connection = xcb_connect (nil, screenNum);
-    local screen = xcb_setup_roots_iterator(xcb_get_setup(connection)).data;
+    local connection = xcb.xcb_connect (nil, screenNum);
+    local screen = xcb.xcb_setup_roots_iterator(xcb.xcb_get_setup(connection)).data;
 
     print("Screen: ", screen, screen.root, screenNum[0]);
 
 
     -- report
     printf ("\n");
-    printf ("Informations of screen %d:\n", screenNum[0]);       -- "PRIu32"
+    printf ("Information of screen %d:\n", screenNum[0]);       -- "PRIu32"
     printf ("  width.........: %d\n", screen.width_in_pixels);  -- "PRIu16"
     printf ("  height........: %d\n", screen.height_in_pixels); -- "PRIu16"
 

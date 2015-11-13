@@ -1,7 +1,6 @@
 local ffi = require("ffi")
 
---#include "xcb.h"
-
+require("xcb_proto_constants")
 
 ffi.cdef[[
 typedef struct xcb_char2b_t {
@@ -2848,49 +2847,27 @@ typedef struct xcb_free_pixmap_request_t {
 
 typedef enum xcb_gc_t {
     XCB_GC_FUNCTION = 1,
-
     XCB_GC_PLANE_MASK = 2,
-
     XCB_GC_FOREGROUND = 4,
-
     XCB_GC_BACKGROUND = 8,
-
     XCB_GC_LINE_WIDTH = 16,
-
     XCB_GC_LINE_STYLE = 32,
-
     XCB_GC_CAP_STYLE = 64,
-
     XCB_GC_JOIN_STYLE = 128,
-
     XCB_GC_FILL_STYLE = 256,
-
     XCB_GC_FILL_RULE = 512,
-
     XCB_GC_TILE = 1024,
-
     XCB_GC_STIPPLE = 2048,
-
     XCB_GC_TILE_STIPPLE_ORIGIN_X = 4096,
-
     XCB_GC_TILE_STIPPLE_ORIGIN_Y = 8192,
-
     XCB_GC_FONT = 16384,
-
     XCB_GC_SUBWINDOW_MODE = 32768,
-
     XCB_GC_GRAPHICS_EXPOSURES = 65536,
-
     XCB_GC_CLIP_ORIGIN_X = 131072,
-
     XCB_GC_CLIP_ORIGIN_Y = 262144,
-
     XCB_GC_CLIP_MASK = 524288,
-
     XCB_GC_DASH_OFFSET = 1048576,
-
     XCB_GC_DASH_LIST = 2097152,
-
     XCB_GC_ARC_MODE = 4194304
 } xcb_gc_t;
 
@@ -15075,7 +15052,7 @@ xcb_no_operation (xcb_connection_t *c  /**< */);
 ]]
 
 
-
+--[[
 local exports = {
     Constants = require("xcb_proto_constants"); 
     Enums = require("xcb_proto_enums");
@@ -15099,3 +15076,4 @@ setmetatable(exports, {
     end,
 })
 return exports 
+--]]

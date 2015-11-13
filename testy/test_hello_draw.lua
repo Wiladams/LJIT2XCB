@@ -9,12 +9,26 @@ local band = bit.band;
 local bnot = bit.bnot;
 local lshift = bit.lshift;
 
-local xcb = require("xcb")()
-local utils = require("test_utils")();
+local xcb = require("xcb")
+local utils = require("test_utils");
 
 local Lib_XCB = Lib_XCB;
 
+ffi.cdef[[
+typedef struct {
+  int thing;
+} flibberdygibbet;
+]]
 
+ffi.cdef[[
+typedef enum {
+  abcmouse_a,
+  abcmouse_b, 
+  abcmouse_c
+}abcmouse;
+]]
+--local a = xcb.flibberdygibbet
+local b = xcb.abcmouse_b;
 
 local function main ()
 
@@ -46,60 +60,63 @@ local function main ()
     {90, 100, 55, 40, 0, lshift(270, 6)}});
 
 	-- Open the connection to the X server 
-  	local c = xcb_connect (nil, nil);
+  	local c = xcb.xcb_connect (nil, nil);
 
   	-- Get the first screen 
-  	local screen = xcb_setup_roots_iterator (xcb_get_setup (c)).data;
+  	local screen = xcb.xcb_setup_roots_iterator (xcb.xcb_get_setup (c)).data;
 
   	-- Create black (foreground) graphic context 
  	local win = screen.root;
 
-  	local foreground = xcb_generate_id (c);
-  	local mask = bor(XCB_GC_FOREGROUND, XCB_GC_GRAPHICS_EXPOSURES);
+  	local foreground = xcb.xcb_generate_id (c);
+  	local mask = bor(xcb.XCB_GC_FOREGROUND, xcb.XCB_GC_GRAPHICS_EXPOSURES);
   	values[0] = screen.black_pixel;
   	values[1] = 0;
   
-  xcb_create_gc (c, foreground, win, mask, values);
+  xcb.xcb_create_gc (c, foreground, win, mask, values);
 
   -- Generate an ID for our window
-  local win = xcb_generate_id(c);
+  local win = xcb.xcb_generate_id(c);
 
   -- Create the window 
-  mask = bor(XCB_CW_BACK_PIXEL, XCB_CW_EVENT_MASK);
+  local width = 320;
+  local height = 240;
+  mask = bor(xcb.XCB_CW_BACK_PIXEL, xcb.XCB_CW_EVENT_MASK);
   values[0] = screen.white_pixel;
-  values[1] = XCB_EVENT_MASK_EXPOSURE;
-  xcb_create_window (c,                             -- Connection          
-                     XCB_COPY_FROM_PARENT,          -- depth               
+  values[1] = xcb.XCB_EVENT_MASK_EXPOSURE;
+print("XCB_COPY_FROM_PARENT")
+  xcb.xcb_create_window (c,                             -- Connection          
+                     xcb.XCB_COPY_FROM_PARENT,          -- depth               
                      win,                           -- window Id           
                      screen.root,                  -- parent window       
                      0, 0,                          -- x, y                
-                     150, 150,                      -- width, height       
+                     width, height,                      -- width, height       
                      10,                            -- border_width        
-                     XCB_WINDOW_CLASS_INPUT_OUTPUT, -- class               
+                     xcb.XCB_WINDOW_CLASS_INPUT_OUTPUT, -- class               
                      screen.root_visual,           -- visual              
                      mask, values);                 -- masks 
 
   -- Map the window on the screen 
-  xcb_map_window (c, win);
+  xcb.xcb_map_window (c, win);
 
-  xcb_flush (c);
+  xcb.xcb_flush (c);
 
   while (true) do
-  	local e = xcb_wait_for_event(c);
+  	local e = xcb.xcb_wait_for_event(c);
 	local eType = band(e.response_type, bnot(0x80));
 
-    if eType == XCB_EXPOSE then
-      xcb_poly_point (c, XCB_COORD_MODE_ORIGIN, win, foreground, 4, points);
+    if eType == xcb.XCB_EXPOSE then
+      xcb.xcb_poly_point (c, xcb.XCB_COORD_MODE_ORIGIN, win, foreground, 4, points);
 
-      xcb_poly_line (c, XCB_COORD_MODE_PREVIOUS, win, foreground, 4, polyline);
+      xcb.xcb_poly_line (c, xcb.XCB_COORD_MODE_PREVIOUS, win, foreground, 4, polyline);
 
-      xcb_poly_segment (c, win, foreground, 2, segments);
+      xcb.xcb_poly_segment (c, win, foreground, 2, segments);
 
-      xcb_poly_rectangle (c, win, foreground, 2, rectangles);
+      xcb.xcb_poly_rectangle (c, win, foreground, 2, rectangles);
 
-      xcb_poly_arc (c, win, foreground, 2, arcs);
+      xcb.xcb_poly_arc (c, win, foreground, 2, arcs);
 
-      xcb_flush (c);
+      xcb.xcb_flush (c);
 
     else
       -- Unknown event type, ignore it 
